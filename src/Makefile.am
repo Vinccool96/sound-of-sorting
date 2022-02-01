@@ -6,7 +6,8 @@ COMMON = SortArray.cpp SortArray.h \
 	SortSound.cpp \
 	SortAlgo.cpp SortAlgo.h \
 	algorithms/timsort.cpp \
-	algorithms/wikisort.cpp
+	algorithms/wikisort.cpp \
+	algorithms/java_sorts.cpp algorithms/java_sorts.h
 
 sound_of_sorting_SOURCES = \
 	WMain.cpp WMain.h \

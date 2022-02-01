@@ -32,10 +32,12 @@
 // end wxGlade
 
 
-class WMain_wxg: public wxFrame {
+class WMain_wxg : public wxFrame
+{
 public:
     // begin wxGlade: WMain_wxg::ids
-    enum {
+    enum
+    {
         ID_RUN_BUTTON = wxID_HIGHEST + 1000,
         ID_RESET_BUTTON = wxID_HIGHEST + 1001,
         ID_STEP_BUTTON = wxID_HIGHEST + 1002,
@@ -50,45 +52,47 @@ public:
     };
     // end wxGlade
 
-    WMain_wxg(wxWindow* parent, int id, const wxString& title, const wxPoint& pos=wxDefaultPosition, const wxSize& size=wxDefaultSize, long style=wxDEFAULT_FRAME_STYLE);
+    WMain_wxg(wxWindow *parent, int id, const wxString &title, const wxPoint &pos = wxDefaultPosition,
+              const wxSize &size = wxDefaultSize, long style = wxDEFAULT_FRAME_STYLE);
 
 private:
     // begin wxGlade: WMain_wxg::methods
     void set_properties();
+
     void do_layout();
     // end wxGlade
 
 protected:
     // begin wxGlade: WMain_wxg::attributes
-    wxStaticBox* sizerInputAlgorithm_staticbox;
-    wxStaticBox* sizer_3_staticbox;
-    WSortView* sortview;
-    wxPanel* splitter_0_pane_1;
-    wxToggleButton* runButton;
-    wxButton* resetButton;
-    wxButton* stepButton;
-    wxToggleButton* soundButton;
-    wxButton* aboutButton;
-    wxButton* randomButton;
-    wxToggleButton* recordButton;
-    wxSlider* speedSlider;
-    wxStaticText* labelDelayValue;
-    wxSlider* soundSustainSlider;
-    wxStaticText* labelSoundSustainValue;
-    wxClickText* labelComparisonsValue;
-    wxClickText* labelAccessCount;
-    wxClickText* labelInversionCount;
-    wxClickText* labelRunsCount;
-    wxChoice* inputTypeChoice;
-    wxSlider* arraySizeSlider;
-    wxStaticText* labelArraySizeValue;
-    wxListBox* algoList;
-    wxStaticText* pivotRuleLabel;
-    wxChoice* pivotRuleChoice;
-    wxPanel* panelQuickSortPivot;
-    wxTextCtrl* infoTextctrl;
-    wxPanel* splitter_0_pane_2;
-    wxSplitterWindow* splitter_0;
+    wxStaticBox *sizerInputAlgorithm_staticbox;
+    wxStaticBox *sizer_3_staticbox;
+    WSortView *sortview;
+    wxPanel *splitter_0_pane_1;
+    wxToggleButton *runButton;
+    wxButton *resetButton;
+    wxButton *stepButton;
+    wxToggleButton *soundButton;
+    wxButton *aboutButton;
+    wxButton *randomButton;
+    wxToggleButton *recordButton;
+    wxSlider *speedSlider;
+    wxStaticText *labelDelayValue;
+    wxSlider *soundSustainSlider;
+    wxStaticText *labelSoundSustainValue;
+    wxClickText *labelComparisonsValue;
+    wxClickText *labelAccessCount;
+    wxClickText *labelInversionCount;
+    wxClickText *labelRunsCount;
+    wxChoice *inputTypeChoice;
+    wxSlider *arraySizeSlider;
+    wxStaticText *labelArraySizeValue;
+    wxListBox *algoList;
+    wxStaticText *pivotRuleLabel;
+    wxChoice *pivotRuleChoice;
+    wxPanel *panelQuickSortPivot;
+    wxTextCtrl *infoTextctrl;
+    wxPanel *splitter_0_pane_2;
+    wxSplitterWindow *splitter_0;
     // end wxGlade
 }; // wxGlade: end class
 

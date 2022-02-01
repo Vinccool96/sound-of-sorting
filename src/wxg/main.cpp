@@ -23,9 +23,11 @@
 #include "WMain_wxg.h"
 
 
-class MyApp: public wxApp {
+class MyApp : public wxApp
+{
 public:
     bool OnInit();
+
 protected:
     wxLocale m_locale;  // locale we'll be using
 };
@@ -41,7 +43,7 @@ bool MyApp::OnInit()
     m_locale.AddCatalog(wxT(APP_CATALOG));
 
     wxInitAllImageHandlers();
-    WMain_wxg* wmain = new WMain_wxg(NULL, wxID_ANY, wxEmptyString);
+    WMain_wxg *wmain = new WMain_wxg(NULL, wxID_ANY, wxEmptyString);
     SetTopWindow(wmain);
     wmain->Show();
     return true;

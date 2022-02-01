@@ -29,24 +29,27 @@
 // end wxGlade
 
 
-class WAbout_wxg: public wxDialog {
+class WAbout_wxg : public wxDialog
+{
 public:
     // begin wxGlade: WAbout_wxg::ids
     // end wxGlade
 
-    WAbout_wxg(wxWindow* parent, int id, const wxString& title, const wxPoint& pos=wxDefaultPosition, const wxSize& size=wxDefaultSize, long style=wxDEFAULT_DIALOG_STYLE);
+    WAbout_wxg(wxWindow *parent, int id, const wxString &title, const wxPoint &pos = wxDefaultPosition,
+               const wxSize &size = wxDefaultSize, long style = wxDEFAULT_DIALOG_STYLE);
 
 private:
     // begin wxGlade: WAbout_wxg::methods
     void set_properties();
+
     void do_layout();
     // end wxGlade
 
 protected:
     // begin wxGlade: WAbout_wxg::attributes
-    wxStaticText* labelTitle;
-    wxStaticText* labelBuildDate;
-    wxButton* okButton;
+    wxStaticText *labelTitle;
+    wxStaticText *labelBuildDate;
+    wxButton *okButton;
     // end wxGlade
 }; // wxGlade: end class
 

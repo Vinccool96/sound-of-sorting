@@ -59,22 +59,24 @@ extern wxString g_algo_name;
 class WSortView : public wxPanel, public SortDelay
 {
 public:
-    WSortView(wxWindow *parent, int id, class WMain_wxg* wmain);
+    WSortView(wxWindow *parent, int id, class WMain_wxg *wmain);
+
     ~WSortView();
 
     /// reference to WMain
-    class WMain* wmain;
+    class WMain *wmain;
 
     /// the instrumentated array to sort
     SortArray m_array;
 
     void RepaintNow();
 
-    virtual void OnPaint(wxPaintEvent& pe);
-    virtual void OnSize(wxSizeEvent& se);
+    virtual void OnPaint(wxPaintEvent &pe);
+
+    virtual void OnSize(wxSizeEvent &se);
 
     // paint the visualization, (dcsize is passed along due to wxMSW issues)
-    void paint(wxDC& dc, const wxSize& dcsize);
+    void paint(wxDC &dc, const wxSize &dcsize);
 
     /// central access function called by each array access of the algorithms
     virtual void OnAccess();
@@ -99,25 +101,27 @@ public:
     void DoStepwise();
 
 public:
-    DECLARE_EVENT_TABLE();
+DECLARE_EVENT_TABLE();
 };
 
 // ----------------------------------------------------------------------------
 
-class SortAlgoThread : public wxThread {
+class SortAlgoThread : public wxThread
+{
 protected:
-    class WMain*        m_wmain;
-    class WSortView&    m_sortview;
+    class WMain *m_wmain;
 
-    size_t              m_algo;
+    class WSortView &m_sortview;
+
+    size_t m_algo;
 
 public:
 
-    SortAlgoThread(class WMain* wmain, class WSortView& sortview, size_t algo);
+    SortAlgoThread(class WMain *wmain, class WSortView &sortview, size_t algo);
 
     virtual ExitCode Entry();
 
-    void    Exit();
+    void Exit();
 };
 
 // ----------------------------------------------------------------------------

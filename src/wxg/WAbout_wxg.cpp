@@ -16,12 +16,14 @@
 // end wxGlade
 
 
-WAbout_wxg::WAbout_wxg(wxWindow* parent, int id, const wxString& title, const wxPoint& pos, const wxSize& size, long /* style */):
-    wxDialog(parent, id, title, pos, size, wxDEFAULT_DIALOG_STYLE)
+WAbout_wxg::WAbout_wxg(wxWindow *parent, int id, const wxString &title, const wxPoint &pos, const wxSize &size,
+                       long /* style */) :
+        wxDialog(parent, id, title, pos, size, wxDEFAULT_DIALOG_STYLE)
 {
     // begin wxGlade: WAbout_wxg::WAbout_wxg
     labelTitle = new wxStaticText(this, wxID_ANY, _("The Sound of Sorting"));
-    labelBuildDate = new wxStaticText(this, wxID_ANY, _("Build Time: "), wxDefaultPosition, wxDefaultSize, wxALIGN_CENTRE);
+    labelBuildDate = new wxStaticText(this, wxID_ANY, _("Build Time: "), wxDefaultPosition, wxDefaultSize,
+                                      wxALIGN_CENTRE);
     okButton = new wxButton(this, wxID_OK, wxEmptyString);
 
     set_properties();
@@ -42,16 +44,24 @@ void WAbout_wxg::set_properties()
 void WAbout_wxg::do_layout()
 {
     // begin wxGlade: WAbout_wxg::do_layout
-    wxBoxSizer* sizer_1 = new wxBoxSizer(wxVERTICAL);
-    sizer_1->Add(labelTitle, 0, wxALL|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL, 12);
-    wxStaticText* labelInfo = new wxStaticText(this, wxID_ANY, _("Visualization and \"audibilization\" of many\npopular sorting algorithms for integers.\nAlso counts the number of comparisons\nand array accesses while running."));
-    sizer_1->Add(labelInfo, 0, wxLEFT|wxRIGHT|wxBOTTOM|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL, 12);
-    wxStaticText* labelCopyright = new wxStaticText(this, wxID_ANY, _("Copyright (c) 2013-2014\nTimo Bingmann <tb@panthema.net>"), wxDefaultPosition, wxDefaultSize, wxALIGN_CENTRE);
-    sizer_1->Add(labelCopyright, 1, wxLEFT|wxRIGHT|wxBOTTOM|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL, 12);
-    wxHyperlinkCtrl* hyperlink = new wxHyperlinkCtrl(this, wxID_ANY, _("http://panthema.net/2013/sound-of-sorting"), _("http://panthema.net/2013/sound-of-sorting"));
-    sizer_1->Add(hyperlink, 0, wxLEFT|wxRIGHT|wxBOTTOM|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL, 12);
-    sizer_1->Add(labelBuildDate, 0, wxLEFT|wxRIGHT|wxBOTTOM|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL, 12);
-    sizer_1->Add(okButton, 0, wxLEFT|wxRIGHT|wxBOTTOM|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL|wxFIXED_MINSIZE, 15);
+    wxBoxSizer *sizer_1 = new wxBoxSizer(wxVERTICAL);
+    sizer_1->Add(labelTitle, 0, wxALL | wxALIGN_CENTER_HORIZONTAL | wxALIGN_CENTER_VERTICAL, 12);
+    wxStaticText *labelInfo = new wxStaticText(this, wxID_ANY,
+                                               _("Visualization and \"audibilization\" of many\npopular sorting algorithms for integers.\nAlso counts the number of comparisons\nand array accesses while running."));
+    sizer_1->Add(labelInfo, 0, wxLEFT | wxRIGHT | wxBOTTOM | wxALIGN_CENTER_HORIZONTAL | wxALIGN_CENTER_VERTICAL, 12);
+    wxStaticText *labelCopyright = new wxStaticText(this, wxID_ANY,
+                                                    _("Copyright (c) 2013-2014\nTimo Bingmann <tb@panthema.net>"),
+                                                    wxDefaultPosition, wxDefaultSize, wxALIGN_CENTRE);
+    sizer_1->Add(labelCopyright, 1, wxLEFT | wxRIGHT | wxBOTTOM | wxALIGN_CENTER_HORIZONTAL | wxALIGN_CENTER_VERTICAL,
+                 12);
+    wxHyperlinkCtrl *hyperlink = new wxHyperlinkCtrl(this, wxID_ANY, _("http://panthema.net/2013/sound-of-sorting"),
+                                                     _("http://panthema.net/2013/sound-of-sorting"));
+    sizer_1->Add(hyperlink, 0, wxLEFT | wxRIGHT | wxBOTTOM | wxALIGN_CENTER_HORIZONTAL | wxALIGN_CENTER_VERTICAL, 12);
+    sizer_1->Add(labelBuildDate, 0, wxLEFT | wxRIGHT | wxBOTTOM | wxALIGN_CENTER_HORIZONTAL | wxALIGN_CENTER_VERTICAL,
+                 12);
+    sizer_1->Add(okButton, 0,
+                 wxLEFT | wxRIGHT | wxBOTTOM | wxALIGN_CENTER_HORIZONTAL | wxALIGN_CENTER_VERTICAL | wxFIXED_MINSIZE,
+                 15);
     SetSizer(sizer_1);
     sizer_1->Fit(this);
     Layout();

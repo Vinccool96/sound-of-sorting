@@ -30,15 +30,15 @@ class wxClickText : public wxStaticText
 public:
 
     wxClickText(wxWindow *parent, wxWindowID id, const wxString &label,
-                const wxPoint& pos = wxDefaultPosition,
-                const wxSize& size = wxDefaultSize,
-                int style = 0, const wxString& name = _T("staticText"));
+                const wxPoint &pos = wxDefaultPosition,
+                const wxSize &size = wxDefaultSize,
+                int style = 0, const wxString &name = _T("staticText"));
 
     virtual ~wxClickText();
 
-    void OnMouseLeftDownEvent(wxMouseEvent& event);
+    void OnMouseLeftDownEvent(wxMouseEvent &event);
 
-    DECLARE_EVENT_TABLE()
+DECLARE_EVENT_TABLE()
 };
 
 #endif // WXCLICKTEXT_H

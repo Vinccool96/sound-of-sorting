@@ -35,12 +35,12 @@ size_t g_compare_count = 0;
 
 size_t g_access_count = 0;
 
-void ArrayItem::OnAccess(const ArrayItem& a)
+void ArrayItem::OnAccess(const ArrayItem &a)
 {
     SoundAccess(a.get_direct());
 }
 
-void ArrayItem::OnComparison(const ArrayItem& a, const ArrayItem& b)
+void ArrayItem::OnComparison(const ArrayItem &a, const ArrayItem &b)
 {
     ++g_compare_count;
 
@@ -52,19 +52,18 @@ void ArrayItem::OnComparison(const ArrayItem& a, const ArrayItem& b)
 // *** SortArray
 
 SortArray::SortArray()
-    : m_calc_inversions(false),
-      m_delay(NULL)
+        : m_calc_inversions(false),
+          m_delay(NULL)
 {
 }
 
-void SortArray::OnAlgoLaunch(const AlgoEntry& ae)
+void SortArray::OnAlgoLaunch(const AlgoEntry &ae)
 {
     if (size() <= ae.inversion_count_limit)
     {
         m_calc_inversions = true;
         RecalcInversions();
-    }
-    else
+    } else
     {
         m_calc_inversions = false;
         m_inversions = -1;
@@ -102,7 +101,7 @@ void SortArray::FinishFill()
     RecalcInversions();
 }
 
-void SortArray::FillInputlist(wxArrayString& list)
+void SortArray::FillInputlist(wxArrayString &list)
 {
     list.Add(_("Random Shuffle"));
     list.Add(_("Ascending"));
@@ -121,26 +120,29 @@ void SortArray::FillData(unsigned int schema, size_t arraysize)
     if (schema == 0) // Shuffle of [1,n]
     {
         for (size_t i = 0; i < m_array.size(); ++i)
-            m_array[i] = ArrayItem(i+1);
+        {
+            m_array[i] = ArrayItem(i + 1);
+        }
 
         std::random_shuffle(m_array.begin(), m_array.end());
-    }
-    else if (schema == 1) // Ascending [1,n]
+    } else if (schema == 1) // Ascending [1,n]
     {
         for (size_t i = 0; i < m_array.size(); ++i)
-            m_array[i] = ArrayItem(i+1);
-    }
-    else if (schema == 2) // Descending [1,n]
+        {
+            m_array[i] = ArrayItem(i + 1);
+        }
+    } else if (schema == 2) // Descending [1,n]
     {
         for (size_t i = 0; i < m_array.size(); ++i)
+        {
             m_array[i] = ArrayItem(m_array.size() - i);
-    }
-    else if (schema == 3) // Cubic skew of [1,n]
+        }
+    } else if (schema == 3) // Cubic skew of [1,n]
     {
         for (size_t i = 0; i < m_array.size(); ++i)
         {
             // normalize to [-1,+1]
-            double x = (2.0 * (double)i / m_array.size()) - 1.0;
+            double x = (2.0 * (double) i / m_array.size()) - 1.0;
             // calculate x^3
             double v = x * x * x;
             // normalize to array size
@@ -151,13 +153,12 @@ void SortArray::FillData(unsigned int schema, size_t arraysize)
         }
 
         std::random_shuffle(m_array.begin(), m_array.end());
-    }
-    else if (schema == 4) // Quintic skew of [1,n]
+    } else if (schema == 4) // Quintic skew of [1,n]
     {
         for (size_t i = 0; i < m_array.size(); ++i)
         {
             // normalize to [-1,+1]
-            double x = (2.0 * (double)i / m_array.size()) - 1.0;
+            double x = (2.0 * (double) i / m_array.size()) - 1.0;
             // calculate x^5
             double v = x * x * x * x * x;
             // normalize to array size
@@ -168,19 +169,17 @@ void SortArray::FillData(unsigned int schema, size_t arraysize)
         }
 
         std::random_shuffle(m_array.begin(), m_array.end());
-    }
-    else if (schema == 5) // shuffled n-2 equal values in [1,n]
+    } else if (schema == 5) // shuffled n-2 equal values in [1,n]
     {
         m_array[0] = ArrayItem(1);
-        for (size_t i = 1; i < m_array.size()-1; ++i)
+        for (size_t i = 1; i < m_array.size() - 1; ++i)
         {
-            m_array[i] = ArrayItem( arraysize / 2 + 1 );
+            m_array[i] = ArrayItem(arraysize / 2 + 1);
         }
-        m_array[m_array.size()-1] = ArrayItem(arraysize);
+        m_array[m_array.size() - 1] = ArrayItem(arraysize);
 
         std::random_shuffle(m_array.begin(), m_array.end());
-    }
-    else // fallback
+    } else // fallback
     {
         return FillData(0, arraysize);
     }
@@ -211,7 +210,8 @@ bool SortArray::CheckSorted()
     {
         ArrayItem key = get_nocount(i);
         g_compare_count--; // dont count the following comparison
-        if (!(prev <= key)) {
+        if (!(prev <= key))
+        {
             wxLogError(_T("Result of sorting algorithm is incorrect!"));
             is_sorted = false;
             break;
@@ -242,7 +242,8 @@ void SortArray::ToggleCalcInversions()
 
 void SortArray::RecalcInversions()
 {
-    if (!m_calc_inversions) {
+    if (!m_calc_inversions)
+    {
         m_inversions = -1;
         return;
     }
@@ -251,13 +252,13 @@ void SortArray::RecalcInversions()
 
     for (size_t i = 0; i < size(); ++i)
     {
-        const ArrayItem& a = direct(i);
+        const ArrayItem &a = direct(i);
 
-        for (size_t j = i+1; j < size(); ++j)
+        for (size_t j = i + 1; j < size(); ++j)
         {
-            const ArrayItem& b = direct(j);
+            const ArrayItem &b = direct(j);
 
-            if ( a.greater_direct(b) )
+            if (a.greater_direct(b))
             {
                 inversions++;
             }
@@ -269,7 +270,8 @@ void SortArray::RecalcInversions()
 
 void SortArray::UpdateInversions(size_t i, size_t j)
 {
-    if (!m_calc_inversions) {
+    if (!m_calc_inversions)
+    {
         m_inversions = -1;
         return;
     }
@@ -280,8 +282,8 @@ void SortArray::UpdateInversions(size_t i, size_t j)
     unsigned int lo = i, hi = j;
     if (lo > hi) std::swap(lo, hi);
 
-    const ArrayItem& ilo = m_array[lo];
-    const ArrayItem& ihi = m_array[hi];
+    const ArrayItem &ilo = m_array[lo];
+    const ArrayItem &ihi = m_array[hi];
     int invdelta = 0;
 
     for (size_t k = lo + 1; k < hi; ++k)
@@ -311,10 +313,10 @@ size_t SortArray::GetRuns() const
 
     for (size_t i = 1; i < size(); ++i)
     {
-        const ArrayItem& a = direct(i-1);
-        const ArrayItem& b = direct(i);
+        const ArrayItem &a = direct(i - 1);
+        const ArrayItem &b = direct(i);
 
-        if ( a.greater_direct(b) )
+        if (a.greater_direct(b))
         {
             runs++;
         }
@@ -331,9 +333,10 @@ short SortArray::InAccessList(ssize_t idx)
     signed priority = -1;
 
     for (std::vector<Access>::iterator it = m_access_list.begin();
-         it != m_access_list.end(); )
+         it != m_access_list.end();)
     {
-        if (it->index != (size_t)idx) {
+        if (it->index != (size_t) idx)
+        {
             ++it;
             continue;
         }
@@ -344,18 +347,18 @@ short SortArray::InAccessList(ssize_t idx)
             color = it->color;
         }
 
-        if (it->sustain == 0) {
+        if (it->sustain == 0)
+        {
             if (it->index == m_access1.index ||
                 it->index == m_access2.index)
             {
                 ++it;
-            }
-            else
+            } else
             {
                 it = m_access_list.erase(it);
             }
-        }
-        else {
+        } else
+        {
             it->sustain--;
             ++it;
         }
@@ -386,23 +389,18 @@ int SortArray::GetIndexColor(size_t idx)
     if (idx == m_access1.index)
     {
         clr = m_access1.color;
-    }
-    else if (idx == m_access2.index)
+    } else if (idx == m_access2.index)
     {
         clr = m_access2.color;
-    }
-    else if ( (clr = InWatchList(idx)) != 0 )
+    } else if ((clr = InWatchList(idx)) != 0)
     {
         // clr already set
-    }
-    else if (m_mark[idx] != 0)
+    } else if (m_mark[idx] != 0)
     {
         clr = m_mark[idx];
-    }
-    else if ( (clr = InAccessList(idx)) >= 0 )
+    } else if ((clr = InAccessList(idx)) >= 0)
     {
-    }
-    else
+    } else
     {
         clr = 0;
     }

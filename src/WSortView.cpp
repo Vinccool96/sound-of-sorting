@@ -36,9 +36,9 @@ bool g_algo_running = false;
 
 wxString g_algo_name;
 
-WSortView::WSortView(wxWindow *parent, int id, class WMain_wxg* wmain)
-    : wxPanel(parent, id),
-      wmain(reinterpret_cast<WMain*>(wmain))
+WSortView::WSortView(wxWindow *parent, int id, class WMain_wxg *wmain)
+        : wxPanel(parent, id),
+          wmain(reinterpret_cast<WMain *>(wmain))
 {
     SetBackgroundStyle(wxBG_STYLE_CUSTOM);
 
@@ -114,7 +114,8 @@ void WSortView::OnAccess()
 void WSortView::DoStepwise()
 {
     wxSemaError se = m_step_semaphore.Post();
-    if (se != wxSEMA_NO_ERROR) {
+    if (se != wxSEMA_NO_ERROR)
+    {
         wxLogError(_T("Error posting to semaphore: %d"), se);
     }
 }
@@ -128,7 +129,7 @@ void WSortView::RepaintNow()
     paint(bdc, GetSize());
 }
 
-void WSortView::OnPaint(wxPaintEvent&)
+void WSortView::OnPaint(wxPaintEvent &)
 {
     wxAutoBufferedPaintDC dc(this);
     // on wxMSW, wxAutoBufferedPaintDC holds a bitmap. The bitmaps size =
@@ -137,13 +138,13 @@ void WSortView::OnPaint(wxPaintEvent&)
     paint(dc, GetSize());
 }
 
-void WSortView::OnSize(wxSizeEvent&)
+void WSortView::OnSize(wxSizeEvent &)
 {
     // full redraw on resize
     Refresh(false);
 }
 
-void WSortView::paint(wxDC& dc, const wxSize& dcsize)
+void WSortView::paint(wxDC &dc, const wxSize &dcsize)
 {
     dc.SetBackground(*wxBLACK_BRUSH);
     dc.Clear();
@@ -158,7 +159,7 @@ void WSortView::paint(wxDC& dc, const wxSize& dcsize)
     size_t width = fwidth - 20;
     size_t height = fheight - 20;
 
-    dc.SetDeviceOrigin(10,10);
+    dc.SetDeviceOrigin(10, 10);
 
     // *** draw array element bars
 
@@ -170,53 +171,53 @@ void WSortView::paint(wxDC& dc, const wxSize& dcsize)
     //double bstep = 1.5 * wbar;
 
     // 2nd variant: one pixel between bars
-    double wbar = (width - (size-1)) / (double)size;
-    if (width <= (size-1)) wbar = 0.0;
+    double wbar = (width - (size - 1)) / (double) size;
+    if (width <= (size - 1)) wbar = 0.0;
 
     double bstep = wbar + 1.0;
 
     // special case for bstep = 2 pixel -> draw 2 pixel bars instead of 1px
     // bar/1px gaps.
-    if ( fabs(wbar - 1.0) < 0.1 && fabs(bstep - 2.0) < 0.1 ) wbar = 2, bstep = 2;
+    if (fabs(wbar - 1.0) < 0.1 && fabs(bstep - 2.0) < 0.1) wbar = 2, bstep = 2;
 
     static const wxPen pens[] = {
-        *wxWHITE_PEN,
-        *wxRED_PEN,
-        *wxGREEN_PEN,
-        *wxCYAN_PEN,
-        wxPen(wxColour(255,255,0)),   //  4 yellow
-        wxPen(wxColour(255,0,255)),   //  5 magenta
-        wxPen(wxColour(255,192,128)), //  6 orange
-        wxPen(wxColour(255,128,192)), //  7 pink
-        wxPen(wxColour(128,192,255)), //  8 darker cyan
-        wxPen(wxColour(192,255,128)), //  9 darker green
-        wxPen(wxColour(192,128,255)), // 10 purple
-        wxPen(wxColour(128,255,192)), // 11 light green
-        wxPen(wxColour(128,128,255)), // 12 blue
-        wxPen(wxColour(192,128,192)), // 13 dark purple
-        wxPen(wxColour(128,192,192)), // 14 dark cyan
-        wxPen(wxColour(192,192,128)), // 15 dark yellow
-        wxPen(wxColour(0,128,255)),   // 16 blue/cyan mix
+            *wxWHITE_PEN,
+            *wxRED_PEN,
+            *wxGREEN_PEN,
+            *wxCYAN_PEN,
+            wxPen(wxColour(255, 255, 0)),   //  4 yellow
+            wxPen(wxColour(255, 0, 255)),   //  5 magenta
+            wxPen(wxColour(255, 192, 128)), //  6 orange
+            wxPen(wxColour(255, 128, 192)), //  7 pink
+            wxPen(wxColour(128, 192, 255)), //  8 darker cyan
+            wxPen(wxColour(192, 255, 128)), //  9 darker green
+            wxPen(wxColour(192, 128, 255)), // 10 purple
+            wxPen(wxColour(128, 255, 192)), // 11 light green
+            wxPen(wxColour(128, 128, 255)), // 12 blue
+            wxPen(wxColour(192, 128, 192)), // 13 dark purple
+            wxPen(wxColour(128, 192, 192)), // 14 dark cyan
+            wxPen(wxColour(192, 192, 128)), // 15 dark yellow
+            wxPen(wxColour(0, 128, 255)),   // 16 blue/cyan mix
     };
 
     static const wxBrush brushes[] = {
-        *wxWHITE_BRUSH,
-        *wxRED_BRUSH,
-        *wxGREEN_BRUSH,
-        *wxCYAN_BRUSH,
-        wxBrush(wxColour(255,255,0)),   //  4 yellow
-        wxBrush(wxColour(255,0,255)),   //  5 magenta
-        wxBrush(wxColour(255,192,128)), //  6 orange
-        wxBrush(wxColour(255,128,192)), //  7 pink
-        wxBrush(wxColour(128,192,255)), //  8 darker cyan
-        wxBrush(wxColour(192,255,128)), //  9 darker green
-        wxBrush(wxColour(192,128,255)), // 10 purple
-        wxBrush(wxColour(128,255,192)), // 11 light green
-        wxBrush(wxColour(128,128,255)), // 12 blue
-        wxBrush(wxColour(192,128,192)), // 13 dark purple
-        wxBrush(wxColour(128,192,192)), // 14 dark cyan
-        wxBrush(wxColour(192,192,128)), // 15 dark yellow
-        wxBrush(wxColour(0,128,255)),   // 16 blue/cyan mix
+            *wxWHITE_BRUSH,
+            *wxRED_BRUSH,
+            *wxGREEN_BRUSH,
+            *wxCYAN_BRUSH,
+            wxBrush(wxColour(255, 255, 0)),   //  4 yellow
+            wxBrush(wxColour(255, 0, 255)),   //  5 magenta
+            wxBrush(wxColour(255, 192, 128)), //  6 orange
+            wxBrush(wxColour(255, 128, 192)), //  7 pink
+            wxBrush(wxColour(128, 192, 255)), //  8 darker cyan
+            wxBrush(wxColour(192, 255, 128)), //  9 darker green
+            wxBrush(wxColour(192, 128, 255)), // 10 purple
+            wxBrush(wxColour(128, 255, 192)), // 11 light green
+            wxBrush(wxColour(128, 128, 255)), // 12 blue
+            wxBrush(wxColour(192, 128, 192)), // 13 dark purple
+            wxBrush(wxColour(128, 192, 192)), // 14 dark cyan
+            wxBrush(wxColour(192, 192, 128)), // 15 dark yellow
+            wxBrush(wxColour(0, 128, 255)),   // 16 blue/cyan mix
     };
 
     wxMutexLocker lock(m_array.m_mutex);
@@ -226,41 +227,41 @@ void WSortView::paint(wxDC& dc, const wxSize& dcsize)
     {
         int clr = m_array.GetIndexColor(i);
 
-        ASSERT(clr < (int)(sizeof(brushes) / sizeof(brushes[0])));
-        dc.SetPen( pens[clr] );
-        dc.SetBrush( brushes[clr] );
+        ASSERT(clr < (int) (sizeof(brushes) / sizeof(brushes[0])));
+        dc.SetPen(pens[clr]);
+        dc.SetBrush(brushes[clr]);
 
-        dc.DrawRectangle(i*bstep, height,
+        dc.DrawRectangle(i * bstep, height,
                          wxMax(1, // draw at least 1 pixel
-                               (wxCoord((i+1)*bstep) - wxCoord(i*bstep)) // integral gap to next bar
+                               (wxCoord((i + 1) * bstep) - wxCoord(i * bstep)) // integral gap to next bar
                                - (bstep - wbar)    // space between bars
-                             ),
-                         -(double)height * m_array.direct(i).get_direct() / m_array.array_max());
+                         ),
+                         -(double) height * m_array.direct(i).get_direct() / m_array.array_max());
     }
 }
 
 BEGIN_EVENT_TABLE(WSortView, wxWindow)
 
-    EVT_PAINT		(WSortView::OnPaint)
-    EVT_SIZE            (WSortView::OnSize)
+                EVT_PAINT        (WSortView::OnPaint)
+                EVT_SIZE            (WSortView::OnSize)
 
 END_EVENT_TABLE()
 
 // ****************************************************************************
 // *** Threading
 
-SortAlgoThread::SortAlgoThread(WMain* wmain, class WSortView& sortview, size_t algo)
-    : wxThread(wxTHREAD_JOINABLE),
-      m_wmain(wmain),
-      m_sortview(sortview),
-      m_algo(algo)
+SortAlgoThread::SortAlgoThread(WMain *wmain, class WSortView &sortview, size_t algo)
+        : wxThread(wxTHREAD_JOINABLE),
+          m_wmain(wmain),
+          m_sortview(sortview),
+          m_algo(algo)
 {
 }
 
-void* SortAlgoThread::Entry()
+void *SortAlgoThread::Entry()
 {
     ASSERT(m_algo < g_algolist_size);
-    const AlgoEntry& ae = g_algolist[m_algo];
+    const AlgoEntry &ae = g_algolist[m_algo];
 
     m_sortview.m_array.OnAlgoLaunch(ae);
 

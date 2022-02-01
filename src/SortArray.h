@@ -45,10 +45,10 @@
 // ----------------------------------------------------------------------------
 
 /// globally count the number of comparisons done on value_type
-extern size_t       g_compare_count;
+extern size_t g_compare_count;
 
 /// globally count the number of array access
-extern size_t       g_access_count;
+extern size_t g_access_count;
 
 // custom struct for array items, which allows detailed counting of comparisons.
 class ArrayItem
@@ -57,66 +57,83 @@ public:
     typedef int value_type;
 
 protected:
-    value_type     value;
+    value_type value;
 
 public:
     ArrayItem() {}
 
-    explicit ArrayItem(const value_type& d) : value(d) {}
+    explicit ArrayItem(const value_type &d) : value(d) {}
 
-    ArrayItem(const ArrayItem& v) : value(v.value) {}
+    ArrayItem(const ArrayItem &v) : value(v.value) {}
 
     // ArrayItem has no implicit data cast, because most sorting algorithms use
     // comparisons. However, radix sort and similar use the following data
     // accessor. To add sound for these, we use a separate callback.
-    const value_type& get() const
-    { OnAccess(*this); return value; }
+    const value_type &get() const
+    {
+        OnAccess(*this);
+        return value;
+    }
 
-    static void OnAccess(const ArrayItem& a);
+    static void OnAccess(const ArrayItem &a);
 
     // for direct data access by visualizer
-    const value_type& get_direct() const
-    { return value; }
+    const value_type &get_direct() const { return value; }
 
     // *** comparisons
 
-    bool operator== (const ArrayItem& v) const
-    { OnComparison(*this,v); return (value == v.value); }
+    bool operator==(const ArrayItem &v) const
+    {
+        OnComparison(*this, v);
+        return (value == v.value);
+    }
 
-    bool operator!= (const ArrayItem& v) const
-    { OnComparison(*this,v); return (value != v.value); }
+    bool operator!=(const ArrayItem &v) const
+    {
+        OnComparison(*this, v);
+        return (value != v.value);
+    }
 
-    bool operator< (const ArrayItem& v) const
-    { OnComparison(*this,v); return (value < v.value); }
+    bool operator<(const ArrayItem &v) const
+    {
+        OnComparison(*this, v);
+        return (value < v.value);
+    }
 
-    bool operator<= (const ArrayItem& v) const
-    { OnComparison(*this,v); return (value <= v.value); }
+    bool operator<=(const ArrayItem &v) const
+    {
+        OnComparison(*this, v);
+        return (value <= v.value);
+    }
 
-    bool operator> (const ArrayItem& v) const
-    { OnComparison(*this,v); return (value > v.value); }
+    bool operator>(const ArrayItem &v) const
+    {
+        OnComparison(*this, v);
+        return (value > v.value);
+    }
 
-    bool operator>= (const ArrayItem& v) const
-    { OnComparison(*this,v); return (value >= v.value); }
+    bool operator>=(const ArrayItem &v) const
+    {
+        OnComparison(*this, v);
+        return (value >= v.value);
+    }
 
     // ternary comparison which counts just one
-    int cmp(const ArrayItem& v) const
+    int cmp(const ArrayItem &v) const
     {
-        OnComparison(*this,v);
+        OnComparison(*this, v);
         return (value == v.value ? 0 : value < v.value ? -1 : +1);
     }
 
     // *** comparisons without sound, counting or delay
 
-    bool equal_direct(const ArrayItem& v) const
-    { return (value == v.value); }
+    bool equal_direct(const ArrayItem &v) const { return (value == v.value); }
 
-    bool less_direct(const ArrayItem& v) const
-    { return (value < v.value); }
+    bool less_direct(const ArrayItem &v) const { return (value < v.value); }
 
-    bool greater_direct(const ArrayItem& v) const
-    { return (value > v.value); }
+    bool greater_direct(const ArrayItem &v) const { return (value > v.value); }
 
-    static void OnComparison(const ArrayItem& a, const ArrayItem& b);
+    static void OnComparison(const ArrayItem &a, const ArrayItem &b);
 };
 
 // ----------------------------------------------------------------------------
@@ -137,10 +154,10 @@ protected:
     // *** Displayed Array Data
 
     /// the array data
-    std::vector<ArrayItem>     m_array;
+    std::vector<ArrayItem> m_array;
 
     /// maximum value in array for scaling display
-    ArrayItem::value_type      m_array_max;
+    ArrayItem::value_type m_array_max;
 
     /// disable calculating of inversions
     bool m_calc_inversions;
@@ -156,32 +173,32 @@ protected:
         unsigned short sustain;
         unsigned short priority;
 
-        Access(size_t i=0, unsigned short c=1,
-               unsigned short s=0, unsigned short p=0)
-            : index(i), color(c), sustain(s), priority(p) { }
+        Access(size_t i = 0, unsigned short c = 1,
+               unsigned short s = 0, unsigned short p = 0)
+                : index(i), color(c), sustain(s), priority(p) {}
     };
 
     /// position of very last get/set accesses (two for swaps)
-    Access      m_access1, m_access2;
+    Access m_access1, m_access2;
 
     /// array of get/set accesses since last paint event
     std::vector<Access> m_access_list;
 
     /// custom markers in the array, set by algorithm
-    std::vector<unsigned char>   m_mark;
+    std::vector<unsigned char> m_mark;
 
     /// custom watched index pointers in the array, set by algorithm
-    std::vector< std::pair<volatile ssize_t*,unsigned char> > m_watch;
+    std::vector<std::pair<volatile ssize_t *, unsigned char> > m_watch;
 
     /// flag for sorted array
-    bool        m_is_sorted;
+    bool m_is_sorted;
 
     /// pointer to delay function
-    SortDelay*  m_delay;
+    SortDelay *m_delay;
 
 public:
     /// mutex for accesses and watch items
-    wxMutex     m_mutex;
+    wxMutex m_mutex;
 
     // *** Array Functions
 
@@ -190,10 +207,10 @@ public:
     SortArray();
 
     /// Set pointer to delay functional
-    void SetSortDelay(SortDelay* delay) { m_delay = delay; }
+    void SetSortDelay(SortDelay *delay) { m_delay = delay; }
 
     /// called by main when an algorithm starts
-    void OnAlgoLaunch(const struct AlgoEntry& ae);
+    void OnAlgoLaunch(const struct AlgoEntry &ae);
 
     /// turn on/off calculation of inversions
     void SetCalcInversions(bool on);
@@ -205,7 +222,7 @@ public:
     void FillData(unsigned int schema, size_t arraysize);
 
     /// fill an array of strings with the list of predefined data templates
-    static void FillInputlist(wxArrayString& list);
+    static void FillInputlist(wxArrayString &list);
 
     /// return whether the array was sorted
     bool IsSorted() const { return m_is_sorted; }
@@ -217,8 +234,7 @@ public:
     bool CheckSorted();
 
     /// return the number of inversions in the array
-    ssize_t GetInversions() const
-    { return m_inversions; }
+    ssize_t GetInversions() const { return m_inversions; }
 
     /// calculate the number of runs in the array
     size_t GetRuns() const;
@@ -253,18 +269,17 @@ public:
     size_t size() const { return m_array.size(); }
 
     /// return highest element value in array
-    const ArrayItem::value_type& array_max() const
-    { return m_array_max; }
+    const ArrayItem::value_type &array_max() const { return m_array_max; }
 
     /// Return an item of the array (bypassing sound, counting and delay)
-    const ArrayItem& direct(size_t i) const
+    const ArrayItem &direct(size_t i) const
     {
         ASSERT(i < m_array.size());
         return m_array[i];
     }
 
     /// Return an item of the array (yields counting and delay)
-    const ArrayItem& operator[](size_t i)
+    const ArrayItem &operator[](size_t i)
     {
         ASSERT(i < m_array.size());
 
@@ -286,7 +301,7 @@ public:
     }
 
     /// Return a mutable item of the array (yields counting and delay)
-    ArrayItem& get_mutable(size_t i)
+    ArrayItem &get_mutable(size_t i)
     {
         ASSERT(i < m_array.size());
 
@@ -309,7 +324,7 @@ public:
     }
 
     /// Return an item of the array (yields delay, but no counting)
-    const ArrayItem& get_nocount(size_t i)
+    const ArrayItem &get_nocount(size_t i)
     {
         ASSERT(i < m_array.size());
 
@@ -332,7 +347,7 @@ public:
     }
 
     /// Set an item of the array: first set then yield sound, counting and delay.
-    void set(size_t i, const ArrayItem& v)
+    void set(size_t i, const ArrayItem &v)
     {
         ASSERT(i < m_array.size());
 
@@ -387,7 +402,7 @@ public:
             ASSERT(lock.IsOk());
 
             m_access1 = Access(i, color, sustain, priority);
-            m_access_list.push_back( Access(i, color, sustain, priority) );
+            m_access_list.push_back(Access(i, color, sustain, priority));
         }
     }
 
@@ -427,12 +442,12 @@ public:
 
     /// Highly experimental method to _track_ array live indexes. For this, the
     /// index must be marked volatile!.
-    void watch(volatile ssize_t* idxptr, unsigned char color = 2)
+    void watch(volatile ssize_t *idxptr, unsigned char color = 2)
     {
         wxMutexLocker lock(m_mutex);
         ASSERT(lock.IsOk());
 
-        m_watch.push_back( std::make_pair(idxptr,color) );
+        m_watch.push_back(std::make_pair(idxptr, color));
     }
 
     /// Release all tracked live array indexes.
